@@ -1,78 +1,183 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import Head from "next/head";
+import Link from "next/link";
+import { SignInButton, SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const FREE_FEATURES = [
+  "5 searches / month",
+  "Plain-English explanations",
+  "Real-world examples",
+];
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const PRO_FEATURES = [
+  "100 searches / month",
+  "Plain-English explanations",
+  "Real-world examples",
+  "Priority support",
+];
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black`}
-    >
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      <Head>
+        <title>Finance Advisor — Financial terms, explained simply</title>
+        <meta
+          name="description"
+          content="Type any financial term and instantly get a plain-English explanation with a real-world example."
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the index.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+      </Head>
+
+      {/* ── Navbar ── */}
+      <header className="fixed inset-x-0 top-0 z-10 flex items-center justify-between border-b border-gray-100 bg-white px-6 py-4">
+        <span className="text-sm font-semibold text-gray-900">Finance Advisor</span>
+        <div className="flex items-center gap-4">
+          <SignedOut>
+            <SignInButton mode="modal" forceRedirectUrl="/app">
+              <button className="text-sm font-medium text-gray-600 transition hover:text-gray-900">
+                Sign in
+              </button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/app" className="text-sm font-medium text-blue-600 transition hover:text-blue-700">
+              Go to app →
+            </Link>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs/pages/getting-started?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      {/* ── Page body — single scroll, no full-screen section ── */}
+      <main className="min-h-screen bg-gray-50 px-4 pt-24 pb-16">
+        <div className="mx-auto max-w-2xl">
+
+          {/* ── Hero ── */}
+          <div className="py-12 text-center">
+            <span className="inline-block rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-600">
+              Your personal finance dictionary
+            </span>
+            <h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 leading-tight">
+              Finance, explained <br />
+              <span className="text-blue-600">in plain English.</span>
+            </h1>
+            <p className="mt-4 text-base text-gray-500 leading-relaxed">
+              Type any financial term — compound interest, P/E ratio, hedge fund —
+              and instantly get a clear explanation with a real-world example.
+            </p>
+            <div className="mt-6">
+              <SignedOut>
+                <SignInButton mode="modal" forceRedirectUrl="/app">
+                  <button className="rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700">
+                    Get started — it's free
+                  </button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <Link
+                  href="/app"
+                  className="inline-block rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700"
+                >
+                  Go to app →
+                </Link>
+              </SignedIn>
+            </div>
+          </div>
+
+          {/* ── Pricing ── */}
+          <div id="pricing" className="mt-4">
+            <div className="mb-6 text-center">
+              <h2 className="text-xl font-semibold text-gray-900">Simple pricing</h2>
+              <p className="mt-1 text-sm text-gray-500">Start free. Upgrade when you need more.</p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+              {/* Free card */}
+              <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">Free</p>
+                <div className="mt-2 flex items-baseline gap-1">
+                  <span className="text-3xl font-bold text-gray-900">$0</span>
+                  <span className="text-sm text-gray-400">/ month</span>
+                </div>
+
+                <ul className="mt-5 space-y-2">
+                  {FREE_FEATURES.map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-sm text-gray-600">
+                      <span className="text-blue-500">✓</span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-6">
+                  <SignedOut>
+                    <SignInButton mode="modal" forceRedirectUrl="/app">
+                      <button className="w-full rounded-lg border border-gray-200 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50">
+                        Get started
+                      </button>
+                    </SignInButton>
+                  </SignedOut>
+                  <SignedIn>
+                    <Link
+                      href="/app"
+                      className="block w-full rounded-lg border border-gray-200 py-2 text-center text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+                    >
+                      Go to app
+                    </Link>
+                  </SignedIn>
+                </div>
+              </div>
+
+              {/* Pro card */}
+              <div className="relative rounded-xl border border-blue-200 bg-white p-6 shadow-sm">
+                {/* Popular badge */}
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-blue-600 px-3 py-0.5 text-xs font-semibold text-white">
+                  Most popular
+                </span>
+
+                <p className="text-xs font-semibold uppercase tracking-wide text-blue-500">Pro</p>
+                <div className="mt-2 flex items-baseline gap-1">
+                  <span className="text-3xl font-bold text-gray-900">$9</span>
+                  <span className="text-sm text-gray-400">/ month</span>
+                </div>
+
+                <ul className="mt-5 space-y-2">
+                  {PRO_FEATURES.map((f) => (
+                    <li key={f} className="flex items-center gap-2 text-sm text-gray-600">
+                      <span className="text-blue-500">✓</span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-6">
+                  <SignedOut>
+                    <SignInButton mode="modal" forceRedirectUrl="/app">
+                      <button className="w-full rounded-lg bg-blue-600 py-2 text-sm font-medium text-white transition hover:bg-blue-700">
+                        Get Pro
+                      </button>
+                    </SignInButton>
+                  </SignedOut>
+                  <SignedIn>
+                    {/* Links to the Clerk UserProfile billing tab */}
+                    <Link
+                      href="/user-profile"
+                      className="block w-full rounded-lg bg-blue-600 py-2 text-center text-sm font-medium text-white transition hover:bg-blue-700"
+                    >
+                      Upgrade to Pro
+                    </Link>
+                  </SignedIn>
+                </div>
+
+                {/* Highlight strip at the bottom — echoes the ExplanationCard example style */}
+                <div className="mt-5 rounded-lg bg-blue-50 px-3 py-2">
+                  <p className="text-xs text-blue-600 text-center">20× more searches than free</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
       </main>
-    </div>
+    </>
   );
 }
