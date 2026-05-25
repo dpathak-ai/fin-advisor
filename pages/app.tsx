@@ -38,7 +38,7 @@ export default function AppPage() {
     let usageInfo: Usage | null = null;
 
     try {
-      await fetchEventSource(`/api/explain`, {
+      await fetchEventSource(`${API_URL}/api/explain`, {
         signal: controllerRef.current.signal,
         method: "POST",
         headers: {
