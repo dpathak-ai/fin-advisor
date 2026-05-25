@@ -2,6 +2,8 @@
 
 A minimalist single-page app that explains any financial term in plain English with a real-world example — powered by OpenAI GPT-4o-mini and streamed live to the browser.
 
+![Finance Advisor Landing Page](public/screenshots/landing.jpg)
+
 ---
 
 ## Features
